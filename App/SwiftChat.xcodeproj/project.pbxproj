@@ -21,6 +21,10 @@
 		C037E1A124E80C07005466C9 /* ChatScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C037E19F24E80C07005466C9 /* ChatScreen.swift */; };
 		C037E1A524E81C9C005466C9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C037E1A424E81C9C005466C9 /* ChatMessage.swift */; };
 		C037E1A624E81C9C005466C9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C037E1A424E81C9C005466C9 /* ChatMessage.swift */; };
+		DD51EEDB2AD9805F0013EB3A /* ChatScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD51EEDA2AD9805F0013EB3A /* ChatScreenModel.swift */; };
+		DD5712A52AD97EFF0011D5F4 /* ChatMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5712A42AD97EFF0011D5F4 /* ChatMessageRow.swift */; };
+		DD5712A62AD97EFF0011D5F4 /* ChatMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5712A42AD97EFF0011D5F4 /* ChatMessageRow.swift */; };
+		DDDEA4A72ADC55A200707682 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEA4A62ADC55A200707682 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,9 @@
 		C037E18D24E80B0B005466C9 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		C037E19F24E80C07005466C9 /* ChatScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScreen.swift; sourceTree = "<group>"; };
 		C037E1A424E81C9C005466C9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		DD51EEDA2AD9805F0013EB3A /* ChatScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScreenModel.swift; sourceTree = "<group>"; };
+		DD5712A42AD97EFF0011D5F4 /* ChatMessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageRow.swift; sourceTree = "<group>"; };
+		DDDEA4A62ADC55A200707682 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,10 +76,11 @@
 		C037E17A24E80B09005466C9 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C037E17B24E80B09005466C9 /* SwiftChatApp.swift */,
-				C037E17C24E80B09005466C9 /* ContentView.swift */,
+				DDDEA4A52ADC559500707682 /* CommonUI */,
+				DD51EED92AD980240013EB3A /* ViewModel */,
 				C037E1A324E81C92005466C9 /* Models */,
 				C037E1A224E81C86005466C9 /* Views */,
+				C037E17B24E80B09005466C9 /* SwiftChatApp.swift */,
 				C037E17D24E80B0B005466C9 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -107,8 +115,9 @@
 		C037E1A224E81C86005466C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DD5712A32AD97EDF0011D5F4 /* ChatScreen */,
+				C037E17C24E80B09005466C9 /* ContentView.swift */,
 				C01B945B24E92CDE003F0EF6 /* SettingsScreen.swift */,
-				C037E19F24E80C07005466C9 /* ChatScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -120,6 +129,32 @@
 				C01B946124E9D7D5003F0EF6 /* UserInfo.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DD51EED92AD980240013EB3A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DD51EEDA2AD9805F0013EB3A /* ChatScreenModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DD5712A32AD97EDF0011D5F4 /* ChatScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C037E19F24E80C07005466C9 /* ChatScreen.swift */,
+				DD5712A42AD97EFF0011D5F4 /* ChatMessageRow.swift */,
+			);
+			name = ChatScreen;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		DDDEA4A52ADC559500707682 /* CommonUI */ = {
+			isa = PBXGroup;
+			children = (
+				DDDEA4A62ADC55A200707682 /* CustomButton.swift */,
+			);
+			path = CommonUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +254,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD5712A52AD97EFF0011D5F4 /* ChatMessageRow.swift in Sources */,
+				DD51EEDB2AD9805F0013EB3A /* ChatScreenModel.swift in Sources */,
+				DDDEA4A72ADC55A200707682 /* CustomButton.swift in Sources */,
 				C037E19024E80B0B005466C9 /* ContentView.swift in Sources */,
 				C037E18E24E80B0B005466C9 /* SwiftChatApp.swift in Sources */,
 				C037E1A524E81C9C005466C9 /* ChatMessage.swift in Sources */,
@@ -232,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD5712A62AD97EFF0011D5F4 /* ChatMessageRow.swift in Sources */,
 				C037E19124E80B0B005466C9 /* ContentView.swift in Sources */,
 				C037E18F24E80B0B005466C9 /* SwiftChatApp.swift in Sources */,
 				C037E1A624E81C9C005466C9 /* ChatMessage.swift in Sources */,
