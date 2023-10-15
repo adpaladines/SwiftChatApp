@@ -9,10 +9,13 @@ let package = Package(
 		.macOS(.v10_15),
 	],
 	products: [
-		.executable(name: "ChatServer", targets: ["ChatServer"])
+		.executable(
+            name: "ChatServer",
+            targets: ["ChatServer"]
+        )
 	],
     dependencies: [
-		.package(url: "https://github.com/vapor/vapor.git", from: "4.0.0")
+		.package(url: "https://github.com/vapor/vapor.git", from: "4.84.6")
     ],
     targets: [
         .target(

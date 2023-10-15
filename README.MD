@@ -1,4 +1,4 @@
-# A simple chat app with SwiftUI and WebSockets - or: Swift in the back, Swift in the front!
+ # A simple chat app with SwiftUI and WebSockets - or: Swift in the back, Swift in the front!
 > Creating a very primitive chat app in SwiftUI, while using Swift and WebSockets to create the chat server. It's Swift from top to bottom, bay-bee!
 
 ![The chat app we will be making](images/hero.png)
