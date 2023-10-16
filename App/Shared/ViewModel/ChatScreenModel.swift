@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+enum ConnexionStatus: Equatable {
+    
+    static func == (lhs: ConnexionStatus, rhs: ConnexionStatus) -> Bool {
+        String(describing: lhs) == String(describing: rhs)
+    }
+    
+    case notConected
+    case connecting
+    case connected
+    case error(_: Error)
+}
+
 final class ChatScreenModel: ObservableObject {
     private var username: String?
     private var userID: UUID?
@@ -14,10 +26,12 @@ final class ChatScreenModel: ObservableObject {
     private var webSocketTask: URLSessionWebSocketTask?
     
     @Published private(set) var messages: [ReceivingChatMessage] = []
-
+    @Published private(set) var connexionStatus: ConnexionStatus = .notConected
+    
     // MARK: - Connection
     func connect(username: String, userID: UUID) {
         guard webSocketTask == nil else {
+            connexionStatus = .error(NSError(domain: "WebSocket already initialized", code: 403))
             return
         }
 
@@ -28,6 +42,9 @@ final class ChatScreenModel: ObservableObject {
         webSocketTask = URLSession.shared.webSocketTask(with: url)
         webSocketTask?.receive(completionHandler: onReceive)
         webSocketTask?.resume()
+        withAnimation {
+            connexionStatus = .connected
+        }
         print("Connecting to chat...")
     }
     
@@ -45,6 +62,7 @@ final class ChatScreenModel: ObservableObject {
         }
         else if case .failure(let error) = incoming {
             print("Error", error)
+            connexionStatus = .error(NSError(domain: "WebSocket connection failed", code: 500))
         }
     }
     
@@ -87,5 +105,7 @@ final class ChatScreenModel: ObservableObject {
     
     deinit {
         disconnect()
+        webSocketTask = nil
+        print("deinit: ChatScreenModel")
     }
 }

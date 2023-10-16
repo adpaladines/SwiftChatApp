@@ -17,7 +17,7 @@ struct ChatScreen: View {
 	
 	// MARK: - Events
 	private func onAppear() {
-		model.connect(username: userInfo.username, userID: userInfo.userID)
+		
 	}
 	
 	private func onDisappear() {
@@ -26,9 +26,9 @@ struct ChatScreen: View {
 	
 	private func onCommit() {
 		if !message.isEmpty {
-			model.send(text: message)
-			message = ""
-		}
+            model.send(text: message)
+            message = ""
+        }
 	}
 	
 	private func scrollToLastMessage(proxy: ScrollViewProxy) {
@@ -38,11 +38,31 @@ struct ChatScreen: View {
 			}
 		}
 	}
+    
+    private var connectButtonView: some View {
+        VStack(alignment: .center, spacing: 16) {
+            Button {
+                model.connect(username: userInfo.username, userID: userInfo.userID)
+            }label: {
+                Text("Start conversation")
+                    .foregroundColor(.white)
+                    .fontWeight(.medium)
+                    .padding()
+            }
+            .frame(height: 44, alignment: .center)
+            .background(Color.green)
+            .cornerRadius(8)
+            .padding()
+        }
+    }
 
     // MARK: -
     var body: some View {
         VStack {
             // Chat history.
+            if model.connexionStatus == .notConected  {
+                connectButtonView
+            }
             ScrollView {
                 ScrollViewReader{ proxy in
                     LazyVStack(spacing: 8) {
@@ -61,10 +81,14 @@ struct ChatScreen: View {
             
             // Message field.
             HStack {
-                TextField("Message", text: $message, onEditingChanged: { _ in }, onCommit: onCommit)
-                    .padding(10)
-                    .background(Color.secondary.opacity(0.2))
-                    .cornerRadius(5)
+                TextField(
+                    "Message", text: $message,
+                    onEditingChanged: { _ in },
+                    onCommit: onCommit
+                )
+                .padding(10)
+                .background(Color.secondary.opacity(0.2))
+                .cornerRadius(5)
                 
                 Button(action: onCommit) {
                     ZStack {
@@ -81,7 +105,7 @@ struct ChatScreen: View {
             }
 			.padding()
 		}
-		.navigationTitle("Chat")
+//		.navigationTitle("Chat")
 		.onAppear(perform: onAppear)
 		.onDisappear(perform: onDisappear)
         .overlay(
