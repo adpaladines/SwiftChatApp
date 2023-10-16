@@ -10,8 +10,12 @@ import SwiftUI
 struct SettingsScreen: View {
     
     @EnvironmentObject private var userInfo: UserInfo
+    
+    @Namespace var animation
+    
     @State var buttonTitle: String = ""
     @State var isOpened: Bool = false
+    @State var isChatOpened: Bool = false
     @State var isActive: Bool = false
 
     let buttonSize: CGFloat = 64
@@ -49,11 +53,17 @@ struct SettingsScreen: View {
             isOpened: $isOpened,
             isActive: isUsernameValid,
             acion: {
-                isOpened.toggle()
+                withAnimation(.snappy(duration: 0.35, extraBounce: 0)) {
+                    isOpened.toggle()
+                }
+                withAnimation(.snappy(duration: 0.35).delay(0.35)) {
+                    isChatOpened = isOpened
+                }
                 print("You tapped the button!")
             }
         )
     }
+    
     @ViewBuilder
     func getForm() -> some View {
         Form {
@@ -70,25 +80,25 @@ struct SettingsScreen: View {
         ZStack {
             getForm()
             getFloatingButton()
-//            if isOpened {
+            if isChatOpened {
                 GeometryReader { gp in
-                    ChatScreen()
-                        .animation(Animation.easeOut(duration: 0.35).delay(isOpened ? 0.5 : 0), value: isOpened)
-                        .frame(
-                            width: isOpened ? gp.size.width - 40 : 0,
-                            height: isOpened ? gp.size.height - buttonSize*2 : 0,
-                            alignment: .center
-                        )
-                        .position(isOpened 
-                                  ? CGPoint(x: gp.size.width/2, y: gp.size.height/2 - buttonSize/2)
-                                  : CGPoint(x: gp.size.width*1.5, y: gp.size.height/2)
-                        )
-                        .shadow(radius: 8)
-                        
-
+                    VStack(alignment: .center) {
+                        ChatScreen()
+                            .shadow(radius: 8)
+                            .matchedGeometryEffect(id: "chatShape", in: animation)
+                            .frame(width: gp.size.width - 40, height: gp.size.height - buttonSize*2, alignment: .center)
+                            .zIndex(10000)
+                    }
                 }
-                
-//            }
+            }else {
+                GeometryReader { gp in
+                    Rectangle()
+                        .fill(Color.clear)
+                        .matchedGeometryEffect(id: "chatShape", in: animation)
+                        .frame(width: buttonSize, height: buttonSize, alignment: .center)
+                        .position(CGPoint(x: gp.size.width - buttonSize/2, y: gp.size.height - buttonSize/2))
+                }
+            }
         }
         .navigationTitle("Settings")
     }

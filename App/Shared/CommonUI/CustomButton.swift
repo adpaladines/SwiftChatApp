@@ -109,7 +109,7 @@ struct CustomButtom: View { //<Content>: View where Content: View {
             } label: {
 //                content()
 //                Text(configuration.buttonTitle)
-                Image(systemName: "bubble.right.fill")
+                Image(systemName: isOpened ? "bubble.left.and.bubble.right.fill" : "bubble.right.fill")
                     .font(.title)
                     .foregroundColor(Color.white)
             }

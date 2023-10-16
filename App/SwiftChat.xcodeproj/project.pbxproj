@@ -81,6 +81,7 @@
 				C037E1A324E81C92005466C9 /* Models */,
 				C037E1A224E81C86005466C9 /* Views */,
 				C037E17B24E80B09005466C9 /* SwiftChatApp.swift */,
+				C037E17C24E80B09005466C9 /* ContentView.swift */,
 				C037E17D24E80B0B005466C9 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -116,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				DD5712A32AD97EDF0011D5F4 /* ChatScreen */,
-				C037E17C24E80B09005466C9 /* ContentView.swift */,
 				C01B945B24E92CDE003F0EF6 /* SettingsScreen.swift */,
 			);
 			path = Views;
@@ -400,7 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QSR4FL5D2K;
+				DEVELOPMENT_TEAM = 3PLD5VHEP6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -408,7 +408,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.frzi.SwiftChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adpaladines.SwiftChat.modified;
 				PRODUCT_NAME = SwiftChat;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -422,7 +422,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QSR4FL5D2K;
+				DEVELOPMENT_TEAM = 3PLD5VHEP6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -430,7 +430,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.frzi.SwiftChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adpaladines.SwiftChat.modified;
 				PRODUCT_NAME = SwiftChat;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
