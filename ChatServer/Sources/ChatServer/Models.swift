@@ -11,6 +11,7 @@ struct SubmittedChatMessage: Decodable {
 	let message: String
 	let user: String
 	let userID: UUID
+    let senderMessageID: UUID
 }
 
 struct ReceivingChatMessage: Encodable, Identifiable {
@@ -19,4 +20,5 @@ struct ReceivingChatMessage: Encodable, Identifiable {
 	let message: String
 	let user: String
 	let userID: UUID
+    let senderMessageID: UUID
 }

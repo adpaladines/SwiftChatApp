@@ -19,6 +19,16 @@ enum ConnexionStatus: Equatable {
     case error(_: Error)
 }
 
+enum MessageSendStatus: Equatable {
+    
+    static func == (lhs: MessageSendStatus, rhs: MessageSendStatus) -> Bool {
+        String(describing: lhs) == String(describing: rhs)
+    }
+    
+    case sending
+    case sent
+}
+
 final class ChatScreenModel: ObservableObject {
     private var username: String?
     private var userID: UUID?
@@ -37,8 +47,8 @@ final class ChatScreenModel: ObservableObject {
 
         self.username = username
         self.userID = userID
-
-        let url = URL(string: "ws://127.0.0.1:8080/chat")!
+//        let url = URL(string: "ws://127.0.0.1:8080/chat")!
+        let url = URL(string: "ws://rcxdh8qz-8080.use.devtunnels.ms/chat")!
         webSocketTask = URLSession.shared.webSocketTask(with: url)
         webSocketTask?.receive(completionHandler: onReceive)
         webSocketTask?.resume()
@@ -62,7 +72,8 @@ final class ChatScreenModel: ObservableObject {
         }
         else if case .failure(let error) = incoming {
             print("Error", error)
-            connexionStatus = .error(NSError(domain: "WebSocket connection failed", code: 500))
+            connexionStatus = .error(NSError(domain: "WebSocket: connection failed", code: 500))
+            eraseConnexion()
         }
     }
     
@@ -71,14 +82,29 @@ final class ChatScreenModel: ObservableObject {
             guard let data = text.data(using: .utf8),
                   let chatMessage = try? JSONDecoder().decode(ReceivingChatMessage.self, from: data)
             else {
+                connexionStatus = .error(NSError(domain: "Incoming Message: Malformed response.", code: 500))
                 return
             }
-
-            DispatchQueue.main.async {
-                withAnimation(.spring()) {
-                    self.messages.append(chatMessage)
+            
+            print("Received: \(chatMessage.user)")
+            
+            if let index = self.messages.firstIndex(where: {$0.senderMessageID == chatMessage.senderMessageID} ) {
+//                self.messages.remove(at: index)
+                DispatchQueue.main.async {
+//                    withAnimation(.spring()) {
+                        self.messages[index].id = chatMessage.id
+//                        self.messages.insert(chatMessage, at: index)
+//                    }
+                }
+                //                        self.messages.append(chatMessage)
+            }else {
+                DispatchQueue.main.async {
+                    withAnimation(.spring()) {
+                        self.messages.append(chatMessage)
+                    }
                 }
             }
+            
         }
     }
     
@@ -88,24 +114,47 @@ final class ChatScreenModel: ObservableObject {
         else {
             return
         }
-        
-        let message = SubmittedChatMessage(message: text, user: username, userID: userID)
+        let senderMessageID: UUID = UUID()
+        let message = SubmittedChatMessage(message: text, user: username, userID: userID, senderMessageID: senderMessageID)
         guard let json = try? JSONEncoder().encode(message),
               let jsonString = String(data: json, encoding: .utf8)
         else {
             return
         }
         
-        webSocketTask?.send(.string(jsonString)) { error in
+        webSocketTask?.send(.string(jsonString)) {[weak self] error in
             if let error = error {
                 print("Error sending message", error)
+            }else {
+                
+                if let message_ = self?.makeSendingStatusMessageWith(message: text, user: username, userID: userID, senderMessageID: senderMessageID) {
+                    print("Sent: \(message_.user)")
+                    DispatchQueue.main.async {
+                        self?.messages.append(message_)
+                    }
+                }
             }
         }
     }
     
-    deinit {
+    func makeSendingStatusMessageWith(message: String, user: String, userID: UUID, senderMessageID: UUID) -> ReceivingChatMessage {
+        ReceivingChatMessage(
+            date: Date(),
+            id: nil,
+            message: message,
+            user: user,
+            userID: userID,
+            senderMessageID: senderMessageID
+        )
+    }
+    
+    func eraseConnexion() {
         disconnect()
         webSocketTask = nil
+    }
+    
+    deinit {
+        eraseConnexion()
         print("deinit: ChatScreenModel")
     }
 }

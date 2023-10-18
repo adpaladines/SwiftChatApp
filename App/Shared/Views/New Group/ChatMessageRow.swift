@@ -38,10 +38,17 @@ struct ChatMessageRow: View {
                 }
                 
                 Text(message.message)
+                
+                HStack {
+                    Spacer()
+                    Image(systemName: "checkmark")
+                        .foregroundColor( message.status == .sending ? .gray : .blue)
+                        .font(.system(size: 12))
+                }
             }
             .foregroundColor(isUser ? .white : .black)
             .padding(10)
-            .background(isUser ? Color.blue : Color(white: 0.95))
+            .background(isUser ? .green.opacity(0.75) : Color(white: 0.95))
             .cornerRadius(5)
             
             if !isUser {
@@ -53,5 +60,15 @@ struct ChatMessageRow: View {
 }
 
 #Preview {
-    ChatMessageRow(message: ReceivingChatMessage(date: Date(), id: UUID(), message: "New messsaje", user: "Admin", userID: UUID() ), isUser: true)
+    ChatMessageRow(
+        message: ReceivingChatMessage(
+            date: Date(), 
+            id: UUID(),
+            message: "New messsaje",
+            user: "Admin",
+            userID: UUID(),
+            senderMessageID: UUID()
+        ),
+        isUser: true
+    )
 }

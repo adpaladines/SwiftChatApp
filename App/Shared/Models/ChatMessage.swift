@@ -11,12 +11,25 @@ struct SubmittedChatMessage: Encodable {
 	let message: String
 	let user: String
 	let userID: UUID
+    let senderMessageID: UUID
 }
 
 struct ReceivingChatMessage: Decodable, Identifiable {
 	let date: Date
-	let id: UUID
+	var id: UUID?
 	let message: String
 	let user: String
 	let userID: UUID
+    let senderMessageID: UUID
+}
+
+extension ReceivingChatMessage {
+    
+    var status: MessageSendStatus {
+        guard id != nil else {
+            return .sending
+        }
+        return .sent
+    }
+    
 }
